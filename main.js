@@ -99,10 +99,10 @@ const loop = () => (timestamp) => {
 	pix
 		.sprite(8, 0, 8, 8)
 		.palette(1)
-		.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
+		.position(100 + (Math.sin(a)*10), 100 + (Math.cos(a)*10))
 		.draw()
 
-	a += 5 * delta
+	a += 20 * delta
 	window.requestAnimationFrame(loop())
 }
 loop()(0)

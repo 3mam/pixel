@@ -1,8 +1,7 @@
 var gl
 
-function initGL() {
-	const verTex = `#version 300 es
 
+const verTex = `#version 300 es
 uniform vec2 resolution;
 uniform vec4 sprite;
 uniform vec2 position;
@@ -31,17 +30,17 @@ void main() {
 }
 `
 
-	const fragTex = `#version 300 es
+const fragTex = `#version 300 es
 precision mediump float;
 
-uniform sampler2D texture;
+uniform sampler2D canvas;
 uniform sampler2D palette;
 uniform int switch_palette;
 in vec2 uv;
 out vec4 outColor;
 
 void main() {
-	int color = int(texelFetch(texture, ivec2(uv),0).a*255.0);
+	int color = int(texelFetch(canvas, ivec2(uv),0).a*255.0);
 	for (int i = 0; i<32; i+=1) {		
 		if (color == i) {
 			outColor = texelFetch(palette, ivec2(i,switch_palette),0);
@@ -51,138 +50,138 @@ void main() {
 }
 `
 
-	function shader(str, typ) {
-		const shader = gl.createShader(typ)
-		gl.shaderSource(shader, str)
-		gl.compileShader(shader)
-		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-			console.log(gl.getShaderInfoLog(shader))
-			return -1
-		}
-		return shader
+function shader(str, typ) {
+	const shader = gl.createShader(typ)
+	gl.shaderSource(shader, str)
+	gl.compileShader(shader)
+	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+		console.log(gl.getShaderInfoLog(shader))
+		return -1
 	}
-
-	function createShader(ver, frag) {
-		const verShader = shader(ver, gl.VERTEX_SHADER)
-		const fragShader = shader(frag, gl.FRAGMENT_SHADER)
-		const id = gl.createProgram()
-		gl.attachShader(id, verShader)
-		gl.attachShader(id, fragShader)
-		gl.linkProgram(id)
-
-		return id
-	}
-
-	const program = createShader(verTex, fragTex)
-	gl.useProgram(program)
-	const shaderVar = {
-		vertexPosition: gl.getAttribLocation(program, "vertex_position"),
-		texture: gl.getUniformLocation(program, "texture"),
-		palette: gl.getUniformLocation(program, "palette"),
-		resolution: gl.getUniformLocation(program, "resolution"),
-		sprite: gl.getUniformLocation(program, "sprite"),
-		position: gl.getUniformLocation(program, "position"),
-		camera: gl.getUniformLocation(program, "camera"),
-		switchPalette: gl.getUniformLocation(program, "switch_palette"),
-		flip: gl.getUniformLocation(program, "flip")
-	}
-
-	gl.uniform1i(shaderVar.texture, 0)
-	gl.uniform1i(shaderVar.palette, 1)
-	gl.uniform2f(shaderVar.flip, 1, -1)
-
-	const buffer = gl.createBuffer()
-	gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-	gl.bufferData(
-		gl.ARRAY_BUFFER,
-		new Float32Array([
-			0, 8,
-			8, 8,
-			0, 0,
-			0, 0,
-			8, 8,
-			8, 0,
-		]),
-		gl.STATIC_DRAW)
-	gl.enableVertexAttribArray(shaderVar.vertexPosition)
-	gl.vertexAttribPointer(shaderVar.vertexPosition, 2, gl.FLOAT, false, 0, 0)
-
-	const texture = gl.createTexture()
-	gl.activeTexture(gl.TEXTURE0)
-	gl.bindTexture(gl.TEXTURE_2D, texture)
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, 1024, 1024, 0, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array(1024 * 1024))
-
-	const palette = gl.createTexture()
-	gl.activeTexture(gl.TEXTURE1)
-	gl.bindTexture(gl.TEXTURE_2D, palette)
-	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 32, 32, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(32 * 32 * 4))
-
-	gl.activeTexture(gl.TEXTURE0)
-	gl.bindTexture(gl.TEXTURE_2D, texture)
-
-	gl.enable(gl.BLEND)
-	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
-
-	return { palette, texture, shaderVar }
+	return shader
 }
 
+function createShader(ver, frag) {
+	const verShader = shader(ver, gl.VERTEX_SHADER)
+	const fragShader = shader(frag, gl.FRAGMENT_SHADER)
+	const id = gl.createProgram()
+	gl.attachShader(id, verShader)
+	gl.attachShader(id, fragShader)
+	gl.linkProgram(id)
+
+	return id
+}
+
+
 export class Pixel {
+	#texture
+	#palette
+	#shavar
+
+	#init() {
+		const program = createShader(verTex, fragTex)
+		gl.useProgram(program)
+		this.#shavar = {
+			vertexPosition: gl.getAttribLocation(program, "vertex_position"),
+			texture: gl.getUniformLocation(program, "canvas"),
+			palette: gl.getUniformLocation(program, "palette"),
+			resolution: gl.getUniformLocation(program, "resolution"),
+			sprite: gl.getUniformLocation(program, "sprite"),
+			position: gl.getUniformLocation(program, "position"),
+			camera: gl.getUniformLocation(program, "camera"),
+			switchPalette: gl.getUniformLocation(program, "switch_palette"),
+			flip: gl.getUniformLocation(program, "flip")
+		}
+
+		gl.uniform1i(this.#shavar.texture, 0)
+		gl.uniform1i(this.#shavar.palette, 1)
+		gl.uniform2f(this.#shavar.flip, 1, -1)
+
+		const buffer = gl.createBuffer()
+		gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+		gl.bufferData(
+			gl.ARRAY_BUFFER,
+			new Float32Array([
+				0, 8,
+				8, 8,
+				0, 0,
+				0, 0,
+				8, 8,
+				8, 0,
+			]),
+			gl.STATIC_DRAW)
+		gl.enableVertexAttribArray(this.#shavar.vertexPosition)
+		gl.vertexAttribPointer(this.#shavar.vertexPosition, 2, gl.FLOAT, false, 0, 0)
+
+		this.#texture = gl.createTexture()
+		gl.activeTexture(gl.TEXTURE0)
+		gl.bindTexture(gl.TEXTURE_2D, this.#texture)
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.ALPHA, 1024, 1024, 0, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array(1024 * 1024))
+
+		this.#palette = gl.createTexture()
+		gl.activeTexture(gl.TEXTURE1)
+		gl.bindTexture(gl.TEXTURE_2D, this.#palette)
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 32, 32, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(32 * 32 * 4))
+
+		gl.enable(gl.BLEND)
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+	}
+
+
 	static create(canvasId, width, height) {
 		gl = document.getElementById(canvasId).getContext('webgl2')
 		const pixel = new Pixel
-		const { palette, texture, shaderVar } = initGL()
-		pixel.handles = { palette, texture }
-		pixel.shader = shaderVar
-		gl.uniform2f(shaderVar.resolution, width, height)
+		pixel.#init()
+		gl.uniform2f(pixel.#shavar.resolution, width, height)
 		pixel.flip(false, false)
 		return pixel
 	}
 
 	flip(flipX, flipY) {
 		if (flipX && flipY)
-			gl.uniform2f(this.shader.flip, -1, 1)
+			gl.uniform2f(this.#shavar.flip, -1, 1)
 		else if (flipX)
-			gl.uniform2f(this.shader.flip, -1, -1)
+			gl.uniform2f(this.#shavar.flip, -1, -1)
 		else if (flipY)
-			gl.uniform2f(this.shader.flip, 1, -1)
+			gl.uniform2f(this.#shavar.shader.flip, 1, -1)
 		else
-			gl.uniform2f(this.shader.flip, 1, 1)
+			gl.uniform2f(this.#shavar.flip, 1, 1)
 
 		return this
 	}
 
 	position(x, y) {
-		gl.uniform2f(this.shader.position, Math.round(x), Math.round(y))
+		gl.uniform2f(this.#shavar.position, Math.round(x), Math.round(y))
 		return this
 	}
 
 	sprite(offsetX, offsetY, width, height) {
-		gl.uniform4f(this.shader.sprite, offsetX, offsetY, width, height)
+		gl.uniform4f(this.#shavar.sprite, offsetX, offsetY, width, height)
 		return this
 	}
 
 	camera(x, y) {
-		gl.uniform2f(this.shader.camera, x, y)
+		gl.uniform2f(this.#shavar.camera, x, y)
 		return this
 	}
 
 	uploadPalette(palette, colors) {
 		gl.activeTexture(gl.TEXTURE1)
-		gl.bindTexture(gl.TEXTURE_2D, this.handles.palette)
+		gl.bindTexture(gl.TEXTURE_2D, this.#palette)
 		gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, palette, 32, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(colors))
 		return this
 	}
 
 	palette(number) {
-		gl.uniform1i(this.shader.switchPalette, number)
+		gl.uniform1i(this.#shavar.switchPalette, number)
 		return this
 	}
 
 	uploadSprite(data, offsetX, offsetY, width, height) {
 		gl.activeTexture(gl.TEXTURE0)
-		gl.bindTexture(gl.TEXTURE_2D, this.handles.texture)
+		gl.bindTexture(gl.TEXTURE_2D, this.#texture)
 		gl.texSubImage2D(gl.TEXTURE_2D, 0, offsetX, offsetY, width, height, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array(data))
 		return this
 	}
