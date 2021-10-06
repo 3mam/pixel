@@ -77,7 +77,7 @@ export class Pixel {
 	#tAtlas
 	#tPalette
 	#sVertexPosition
-	#sTexture
+	#sAtlas
 	#sPalette
 	#sResolution
 	#sSprite
@@ -90,7 +90,7 @@ export class Pixel {
 		const program = createShader(verTex, fragTex)
 		gl.useProgram(program)
 		this.#sVertexPosition = gl.getAttribLocation(program, "vertex_position")
-		this.#sTexture = gl.getUniformLocation(program, "atlas")
+		this.#sAtlas = gl.getUniformLocation(program, "atlas")
 		this.#sPalette = gl.getUniformLocation(program, "palette")
 		this.#sResolution = gl.getUniformLocation(program, "resolution")
 		this.#sSprite = gl.getUniformLocation(program, "sprite")
@@ -99,7 +99,7 @@ export class Pixel {
 		this.#sSwitchPalette = gl.getUniformLocation(program, "switch_palette")
 		this.#sFlip = gl.getUniformLocation(program, "flip")
 
-		gl.uniform1i(this.#sTexture, 0)
+		gl.uniform1i(this.#sAtlas, 0)
 		gl.uniform1i(this.#sPalette, 1)
 		gl.uniform2f(this.#sFlip, 1, -1)
 
