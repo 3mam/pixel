@@ -173,10 +173,10 @@ export class Pixel {
 		return this
 	}
 
-	uploadPalette(palette, colors) {
+	uploadPalette(data, palette) {
 		gl.activeTexture(gl.TEXTURE1)
 		gl.bindTexture(gl.TEXTURE_2D, this.#tPalette)
-		gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, palette, 32, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(colors))
+		gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, palette, 32, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(data))
 		return this
 	}
 

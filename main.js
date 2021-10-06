@@ -66,8 +66,8 @@ console.log(palette.length)
 const pix = Pixel.create('canvas', 320, 180)
 	.uploadSprite(sp, 0, 0, 8, 8)
 	.uploadSprite(sp2, 8, 0, 8, 8)
-	.uploadPalette(0, palette)
-	.uploadPalette(1, palette2)
+	.uploadPalette(palette, 0)
+	.uploadPalette(palette2, 1)
 //320, 180
 
 let a = 0
@@ -99,7 +99,7 @@ const loop = () => (timestamp) => {
 	pix
 		.sprite(8, 0, 8, 8)
 		.palette(1)
-		.position(100 + (Math.sin(a)*10), 100 + (Math.cos(a)*10))
+		.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
 		.draw()
 
 	a += 20 * delta
