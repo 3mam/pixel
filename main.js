@@ -65,8 +65,8 @@ palette2[15] = 255
 console.log(palette.length)
 
 p.set('canvas', 320, 180)
-p.uploadSprite(sp, 0, 0, 8, 8)
-p.uploadSprite(sp2, 8, 0, 8, 8)
+p.uploadSprite(sp, {offsetX:0, offsetY:0, width:8, height:8})
+p.uploadSprite(sp2, {offsetX:8, offsetY:0, width:8, height:8})
 p.uploadPalette(palette, 0)
 p.uploadPalette(palette2, 1)
 //320, 180
@@ -79,7 +79,8 @@ const loop = () => (timestamp) => {
 	last = timestamp
 	p.clear()
 	p.palette(0)
-	p.sprite(0, 0, 8, 8)
+	let foo = {offsetX:0, offsetY:0, width:8, height:8}
+	p.sprite(foo)
 	for (let x = 0; x < 10; x++) {
 		p.position(8 * x, 0)
 		p.draw()
@@ -93,7 +94,7 @@ const loop = () => (timestamp) => {
 		p.draw()
 	}
 
-	p.sprite(8, 0, 8, 8)
+	p.sprite({offsetX:8, offsetY:0, width:8, height:8})
 	p.palette(1)
 	p.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
 	p.draw()

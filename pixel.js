@@ -153,7 +153,7 @@ function position(x, y) {
 	gl.uniform2f(sPosition, Math.round(x), Math.round(y))
 }
 
-function sprite(offsetX, offsetY, width, height) {
+function sprite({offsetX, offsetY, width, height}) {
 	gl.uniform4f(sSprite, offsetX, offsetY, width, height)
 }
 
@@ -171,7 +171,7 @@ function palette(number) {
 	gl.uniform1i(sSwitchPalette, number)
 }
 
-function uploadSprite(data, offsetX, offsetY, width, height) {
+function uploadSprite(data, {offsetX, offsetY, width, height}) {
 	gl.activeTexture(gl.TEXTURE0)
 	gl.bindTexture(gl.TEXTURE_2D, tAtlas)
 	gl.texSubImage2D(gl.TEXTURE_2D, 0, offsetX, offsetY, width, height, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array(data))
