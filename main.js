@@ -1,4 +1,4 @@
-import { Pixel } from './pixel.js'
+import { pixel as p } from './pixel.js'
 
 const toggleFullScreen = () =>
 	!document.fullscreenElement
@@ -63,11 +63,12 @@ palette2[14] = 255
 palette2[15] = 255
 
 console.log(palette.length)
-const pix = Pixel.create('canvas', 320, 180)
-	.uploadSprite(sp, 0, 0, 8, 8)
-	.uploadSprite(sp2, 8, 0, 8, 8)
-	.uploadPalette(palette, 0)
-	.uploadPalette(palette2, 1)
+
+p.set('canvas', 320, 180)
+p.uploadSprite(sp, 0, 0, 8, 8)
+p.uploadSprite(sp2, 8, 0, 8, 8)
+p.uploadPalette(palette, 0)
+p.uploadPalette(palette2, 1)
 //320, 180
 
 let a = 0
@@ -76,31 +77,26 @@ let last = 0
 const loop = () => (timestamp) => {
 	const delta = Math.min(1, (timestamp - last) / 1000)
 	last = timestamp
-	pix
-		.clear()
-		.palette(0)
-		.sprite(0, 0, 8, 8)
+	p.clear()
+	p.palette(0)
+	p.sprite(0, 0, 8, 8)
 	for (let x = 0; x < 10; x++) {
-		pix
-			.position(8 * x, 0)
-			.draw()
+		p.position(8 * x, 0)
+		p.draw()
 	}
 	for (let x = 0; x < 10; x++) {
-		pix
-			.position(8 * x, 8 * 10)
-			.draw()
+		p.position(8 * x, 8 * 10)
+		p.draw()
 	}
 	for (let x = 0; x < 11; x++) {
-		pix
-			.position(8 * 10, 8 * x)
-			.draw()
+		p.position(8 * 10, 8 * x)
+		p.draw()
 	}
 
-	pix
-		.sprite(8, 0, 8, 8)
-		.palette(1)
-		.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
-		.draw()
+	p.sprite(8, 0, 8, 8)
+	p.palette(1)
+	p.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
+	p.draw()
 
 	a += 20 * delta
 	window.requestAnimationFrame(loop())
