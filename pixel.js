@@ -96,7 +96,7 @@ function init() {
 
 	gl.uniform1i(sAtlas, 0)
 	gl.uniform1i(sPalette, 1)
-	gl.uniform2f(sFlip, 1, -1)
+	gl.uniform2f(sFlip, 1, 1)
 
 	const buffer = gl.createBuffer()
 	gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
@@ -134,7 +134,6 @@ function set(canvasId, width, height) {
 	gl = document.getElementById(canvasId).getContext('webgl2')
 	init()
 	gl.uniform2f(sResolution, width, height)
-	flip(false, false)
 }
 
 function flip(flipX, flipY) {
