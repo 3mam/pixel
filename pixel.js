@@ -157,7 +157,7 @@ void main() {
 	}
 
 	function camera(x, y) {
-		gl.uniform2f(sCamera, x, y)
+		gl.uniform2f(sCamera, Math.round(x), Math.round(y))
 	}
 
 	function uploadPalette(data, palette) {
