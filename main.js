@@ -96,8 +96,9 @@ const loop = () => (timestamp) => {
 	p.palette(1)
 	p.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
 	p.draw()
-
-	a += 20 * delta
+	p.position(100 + (-Math.sin(a) * 10), 100 + (-Math.cos(a) * 10))
+	p.draw()
+	a += 1 * delta
 	window.requestAnimationFrame(loop())
 }
 loop()(0)
