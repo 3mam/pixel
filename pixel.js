@@ -200,3 +200,14 @@ void main() {
 }
 
 export const pixel = draw()
+
+export const loop = (gameloop = function (delta = 0) { }) => {
+	let last = 0
+	const l = timestamp => {
+		const delta = Math.min(1, (timestamp - last) / 1000)
+		last = timestamp
+		gameloop(delta)
+		window.requestAnimationFrame(l)
+	}
+	l(0)
+}
