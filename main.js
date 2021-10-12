@@ -1,11 +1,4 @@
-import { pixel as p, loop } from './pixel.js'
-
-const toggleFullScreen = () =>
-	!document.fullscreenElement
-		? document.getElementById('canvas').requestFullscreen()
-		: document.exitFullscreen
-			? document.exitFullscreen()
-			: null
+import { pixel as p, loop, toggleFullScreen } from './pixel.js'
 
 document.getElementById('foo').onclick = toggleFullScreen
 
@@ -62,7 +55,7 @@ palette2[13] = 0
 palette2[14] = 255
 palette2[15] = 255
 
-p.set('canvas', 320, 180)
+p.set('canvas', 180, 320)
 p.uploadSprite(sp, { offsetX: 0, offsetY: 0, width: 8, height: 8 })
 p.uploadSprite(sp2, { offsetX: 8, offsetY: 0, width: 8, height: 8 })
 p.uploadPalette(palette, 0)
@@ -98,5 +91,10 @@ const f = delta => {
 	p.draw()
 	a += 1 * delta
 }
+
+document.addEventListener('keypress', (e) => {
+	if (e.key == 'f')
+		toggleFullScreen()
+})
 
 loop(f)

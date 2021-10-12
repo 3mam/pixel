@@ -7,17 +7,22 @@
 			margin: 0;
 		}
 
-		canvas {
-			border: 0;
-			border-style: solid;
-			width: 70%;
-			aspect-ratio: 16/9;
+    canvas {
+      position: fixed;
+      width: auto;
+      height: 100%;
+    }
+
+		body {
+			display: flex;
+      justify-content: center;
+			background-color: #2e2e38;
 		}
 	</style>
 </head>
 
 <body>
-	<canvas width="1280" height="720" id="canvas"></canvas>
+	<canvas width="720" height="1280" id="canvas"></canvas>
 	<button id="foo">fullScreen</button>
 	<script type="module" src="main.js"></script>
 </body>

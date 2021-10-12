@@ -211,3 +211,10 @@ export const loop = (gameloop = function (delta = 0) { }) => {
 	}
 	l(0)
 }
+
+export const toggleFullScreen = () => {
+  if (!document.fullscreenElement)
+    document.documentElement.requestFullscreen()
+  else if (document.exitFullscreen)
+    document.exitFullscreen()
+}
