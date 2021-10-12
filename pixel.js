@@ -201,7 +201,7 @@ void main() {
 
 export const pixel = draw()
 
-export const loop = (gameloop = function (delta = 0) { }) => {
+export const loop = gameloop => {
 	let last = 0
 	const l = timestamp => {
 		const delta = Math.min(1, (timestamp - last) / 1000)

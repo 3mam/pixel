@@ -1,7 +1,5 @@
 import { pixel as p, loop, toggleFullScreen } from './pixel.js'
 
-document.getElementById('foo').onclick = toggleFullScreen
-
 const sp = [
 	3, 0, 3, 0, 3, 0, 1, 1, //8
 	0, 0, 0, 0, 0, 0, 0, 1, //16
@@ -96,5 +94,8 @@ document.addEventListener('keypress', (e) => {
 	if (e.key == 'f')
 		toggleFullScreen()
 })
-
+document.addEventListener('touchstart', (e) => {
+	console.log(e)
+	toggleFullScreen()
+})
 loop(f)
