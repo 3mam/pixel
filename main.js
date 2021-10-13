@@ -1,4 +1,4 @@
-import { pixel as p, loop, toggleFullScreen } from './pixel.js'
+import { draw as d, loop, toggleFullScreen } from './pixel.js'
 
 const sp = [
 	3, 0, 3, 0, 3, 0, 1, 1, //8
@@ -53,40 +53,40 @@ palette2[13] = 0
 palette2[14] = 255
 palette2[15] = 255
 
-p.set('canvas', 180, 320)
-p.uploadSprite(sp, { offsetX: 0, offsetY: 0, width: 8, height: 8 })
-p.uploadSprite(sp2, { offsetX: 8, offsetY: 0, width: 8, height: 8 })
-p.uploadPalette(palette, 0)
-p.uploadPalette(palette2, 1)
+d.set('canvas', 180, 320)
+d.uploadSprite(sp, { offsetX: 0, offsetY: 0, width: 8, height: 8 })
+d.uploadSprite(sp2, { offsetX: 8, offsetY: 0, width: 8, height: 8 })
+d.uploadPalette(palette, 0)
+d.uploadPalette(palette2, 1)
 //320, 180
 
 let a = 0
 let b = 100
 
 const f = delta => {
-	p.clear()
-	p.palette(0)
+	d.clear()
+	d.palette(0)
 	let foo = { offsetX: 0, offsetY: 0, width: 8, height: 8 }
-	p.sprite(foo)
+	d.sprite(foo)
 	for (let x = 0; x < 10; x++) {
-		p.position(8 * x, 0)
-		p.draw()
+		d.position(8 * x, 0)
+		d.draw()
 	}
 	for (let x = 0; x < 10; x++) {
-		p.position(8 * x, 8 * 10)
-		p.draw()
+		d.position(8 * x, 8 * 10)
+		d.draw()
 	}
 	for (let x = 0; x < 11; x++) {
-		p.position(8 * 10, 8 * x)
-		p.draw()
+		d.position(8 * 10, 8 * x)
+		d.draw()
 	}
 
-	p.sprite({ offsetX: 0, offsetY: 0, width: 16, height: 16 })
-	p.palette(1)
-	p.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
-	p.draw()
-	p.position(100 + (-Math.sin(a) * 10), 100 + (-Math.cos(a) * 10))
-	p.draw()
+	d.sprite({ offsetX: 0, offsetY: 0, width: 16, height: 16 })
+	d.palette(1)
+	d.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
+	d.draw()
+	d.position(100 + (-Math.sin(a) * 10), 100 + (-Math.cos(a) * 10))
+	d.draw()
 	a += 1 * delta
 }
 

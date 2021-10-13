@@ -1,7 +1,7 @@
 export function loop(gameloop: (delta: Number) => void): void
 export function toggleFullScreen(): void
 
-export const pixel: {
+export const draw: {
   set: (canvasId: String, width: Number, height: Number) => void
   flip: (flipX: Number, flipY: Number) => void
   position: (x: Number, y: Number) => void

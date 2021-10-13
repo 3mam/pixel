@@ -1,4 +1,4 @@
-function draw() {
+function Draw() {
 	let gl
 	let tAtlas
 	let tPalette
@@ -199,7 +199,7 @@ void main() {
 	}
 }
 
-export const pixel = draw()
+export const draw = Draw()
 
 export const loop = gameloop => {
 	let last = 0
