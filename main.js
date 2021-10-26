@@ -1,4 +1,5 @@
-import { draw as d, loop, toggleFullScreen } from './pixel.js'
+import { pixel as d } from './pixel.js'
+
 
 const sp = [
 	3, 0, 3, 0, 3, 0, 1, 1, //8
@@ -62,7 +63,8 @@ d.uploadPalette(palette2, 1)
 
 let a = 0
 let b = 100
-
+let xx = 0
+let yy = 0
 const f = delta => {
 	d.clear()
 	d.palette(0)
@@ -85,17 +87,19 @@ const f = delta => {
 	d.palette(1)
 	d.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
 	d.draw()
-	d.position(100 + (-Math.sin(a) * 10), 100 + (-Math.cos(a) * 10))
+	if (d.isInput()) {
+		let p = d.getInput()
+		console.log(p[0])
+		xx = p[0].x
+		yy = p[0].y
+		d.position(xx, yy)
+	}
 	d.draw()
 	a += 1 * delta
 }
 
 document.addEventListener('keypress', (e) => {
 	if (e.key == 'f')
-		toggleFullScreen()
+		d.toggleFullScreen()
 })
-document.addEventListener('touchstart', (e) => {
-	console.log(e)
-	toggleFullScreen()
-})
-loop(f)
+d.loop(f)

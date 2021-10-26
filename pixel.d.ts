@@ -1,7 +1,4 @@
-export function loop(gameloop: (delta: Number) => void): void
-export function toggleFullScreen(): void
-
-export const draw: {
+export const pixel: {
   set: (canvasId: String, width: Number, height: Number) => void
   flip: (flipX: Number, flipY: Number) => void
   position: (x: Number, y: Number) => void
@@ -22,4 +19,14 @@ export const draw: {
   }) => void
   clear: () => void
   draw: () => void
+  loop(gameloop: (delta: Number) => void): void
+  toggleFullScreen(): void
+  isInput(): Boolean
+  getInput(): [{
+    type: String,
+    timeStamp: Number,
+    identifier: Number,
+    x: Number,
+    y: Number,
+  }]
 }
