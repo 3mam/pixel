@@ -36,10 +36,17 @@ void main() {
 	else
 		sprite_position = vertex_position;
 
-	uv = sprite_position + vec2(sprite.x, sprite.y);
 	vec2 flip_position = sprite_position * flip;
+	if (flip == vec2(-1.0,1.0))
+		flip_position += vec2(sprite.w, 0.0);
+	if (flip == vec2(1.0,-1.0))
+		flip_position += vec2(0.0, sprite.z);
+	if (flip == vec2(-1.0,-1.0))
+		flip_position += vec2(sprite.w, sprite.z);
+
+	uv = sprite_position + vec2(sprite.x, sprite.y);
 	vec2 cord = ( ( position / resolution ) * 2.0 - 1.0 );
-	vec2 a =  (flip_position  / ( resolution / 2.0 ) + cord);
+	vec2 a = (flip_position  / ( resolution / 2.0 ) + cord);
 	vec2 cam = ( camera / resolution ) * 2.0;
 	gl_Position = vec4((a + cam)*vec2(1,-1), 0, 1);
 }
@@ -148,9 +155,9 @@ function set(canvasId, width, height) {
 
 function flip(flipX, flipY) {
 	if (flipX && flipY)
-		gl.uniform2f(sFlip, -1, 1)
-	else if (flipX)
 		gl.uniform2f(sFlip, -1, -1)
+	else if (flipX)
+		gl.uniform2f(sFlip, -1, 1)
 	else if (flipY)
 		gl.uniform2f(sFlip, 1, -1)
 	else

@@ -57,6 +57,8 @@ palette2[15] = 255
 d.set('canvas', 180, 320)
 d.uploadSprite(sp, { offsetX: 0, offsetY: 0, width: 8, height: 8 })
 d.uploadSprite(sp2, { offsetX: 8, offsetY: 0, width: 8, height: 8 })
+d.uploadSprite(sp2, { offsetX: 0, offsetY: 8, width: 8, height: 8 })
+d.uploadSprite(sp, { offsetX: 8, offsetY: 8, width: 8, height: 8 })
 d.uploadPalette(palette, 0)
 d.uploadPalette(palette2, 1)
 //320, 180
@@ -98,7 +100,7 @@ const f = delta => {
 	d.position(box2.x, box2.y)
 	if (d.boxCollision(box1, box2)) {
 		d.palette(0)
-		d.flip(false,true)
+		d.flip(true,true)
 	}
 	d.draw()
 	a += 1 * delta
