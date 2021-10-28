@@ -63,10 +63,10 @@ d.uploadPalette(palette2, 1)
 
 let a = 0
 let b = 100
-let xx = 0
-let yy = 0
+const box2 = { x: 0, y: 0, width: 16, height: 8 }
 const f = delta => {
 	d.clear()
+	d.flip(false,false)
 	d.palette(0)
 	let foo = { offsetX: 0, offsetY: 0, width: 8, height: 8 }
 	d.sprite(foo)
@@ -85,17 +85,24 @@ const f = delta => {
 
 	d.sprite({ offsetX: 0, offsetY: 0, width: 16, height: 16 })
 	d.palette(1)
-	d.position(100 + (Math.sin(a) * 10), 100 + (Math.cos(a) * 10))
+	const box1 = { x: 100 + (Math.sin(a) * 10), y: 100 + (Math.cos(a) * 10), width: 16, height: 8 }
+
+	d.position(box1.x, box1.y)
 	d.draw()
 	if (d.isInput()) {
 		let p = d.getInput()
 		console.log(p[0])
-		xx = p[0].x
-		yy = p[0].y
-		d.position(xx, yy)
+		box2.x = p[0].x
+		box2.y = p[0].y
+	}
+	d.position(box2.x, box2.y)
+	if (d.boxCollision(box1, box2)) {
+		d.palette(0)
+		d.flip(false,true)
 	}
 	d.draw()
 	a += 1 * delta
+
 }
 
 document.addEventListener('keypress', (e) => {

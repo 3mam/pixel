@@ -29,4 +29,15 @@ export const pixel: {
     x: Number,
     y: Number,
   }]
+  boxCollision(a: {
+    x: Number;
+    y: Number;
+    width: Number;
+    height: Number;
+  }, b: {
+    x: Number;
+    y: Number;
+    width: Number;
+    height: Number;
+  }): boolean
 }

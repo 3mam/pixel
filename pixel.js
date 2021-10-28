@@ -279,7 +279,14 @@ function getInput() {
 }
 
 function isInput() {
-	return input.length>0
+	return input.length > 0
+}
+
+function boxCollision(a = { x, y, width, height }, b = { x, y, width, height }) {
+	return (a.x < b.x + b.width &&
+		a.x + a.width > b.x &&
+		a.y < b.y + b.height &&
+		a.height + a.y > b.y)
 }
 
 export const pixel = {
@@ -297,4 +304,5 @@ export const pixel = {
 	toggleFullScreen: toggleFullScreen,
 	getInput: getInput,
 	isInput: isInput,
+	boxCollision: boxCollision,
 }
