@@ -1,6 +1,6 @@
 export const pixel: {
   set: (canvasId: String, width: Number, height: Number) => void
-  flip: (flipX: Number, flipY: Number) => void
+  flip: (flipX: Boolean, flipY: Boolean) => void
   position: (x: Number, y: Number) => void
   sprite: (offsetRect: {
     offsetX: Number
