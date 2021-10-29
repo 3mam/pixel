@@ -182,7 +182,7 @@ function uploadPalette(data, palette) {
 	gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, palette, 32, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(data))
 }
 
-function palette(number) {
+function palette(number=0) {
 	gl.uniform1i(sSwitchPalette, number)
 }
 
