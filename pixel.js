@@ -153,7 +153,7 @@ function set(canvasId, width, height) {
 	eventsInit()
 }
 
-function flip(flipX, flipY) {
+function flip(flipX=false, flipY=false) {
 	if (flipX && flipY)
 		gl.uniform2f(sFlip, -1, -1)
 	else if (flipX)

@@ -65,7 +65,7 @@ d.uploadPalette(palette2, 1)
 
 let a = 0
 let b = 100
-const box2 = { x: 0, y: 0, width: 16, height: 8 }
+const box2 = { x: 0, y: 0, width: 16, height: 16 }
 const f = delta => {
 	d.clear()
 	d.flip(false,false)
@@ -87,7 +87,7 @@ const f = delta => {
 
 	d.sprite({ offsetX: 0, offsetY: 0, width: 16, height: 16 })
 	d.palette(1)
-	const box1 = { x: 100 + (Math.sin(a) * 10), y: 100 + (Math.cos(a) * 10), width: 16, height: 8 }
+	const box1 = { x: 100 + (Math.sin(a) * 10), y: 100 + (Math.cos(a) * 10), width: 16, height: 16 }
 
 	d.position(box1.x, box1.y)
 	d.draw()
