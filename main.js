@@ -1,5 +1,7 @@
-import { pixel as d } from './pixel.js'
-
+import { init } from './pixel/init.js'
+import { draw } from './pixel/draw.js'
+import { input } from './pixel/input.js'
+import { collision } from './pixel/collision.js'
 
 const sp = [
 	3, 0, 3, 0, 3, 0, 1, 1, //8
@@ -54,61 +56,60 @@ palette2[13] = 0
 palette2[14] = 255
 palette2[15] = 255
 
-d.set('canvas', 180, 320)
-d.uploadSprite(sp, { offsetX: 0, offsetY: 0, width: 8, height: 8 })
-d.uploadSprite(sp2, { offsetX: 8, offsetY: 0, width: 8, height: 8 })
-d.uploadSprite(sp2, { offsetX: 0, offsetY: 8, width: 8, height: 8 })
-d.uploadSprite(sp, { offsetX: 8, offsetY: 8, width: 8, height: 8 })
-d.uploadPalette(palette, 0)
-d.uploadPalette(palette2, 1)
+init('canvas', 180, 320)
+draw.uploadSprite(sp, { offsetX: 0, offsetY: 0, width: 8, height: 8 })
+draw.uploadSprite(sp2, { offsetX: 8, offsetY: 0, width: 8, height: 8 })
+draw.uploadSprite(sp2, { offsetX: 0, offsetY: 8, width: 8, height: 8 })
+draw.uploadSprite(sp, { offsetX: 8, offsetY: 8, width: 8, height: 8 })
+draw.uploadPalette(palette, 0)
+draw.uploadPalette(palette2, 1)
 //320, 180
 
 let a = 0
 let b = 100
 const box2 = { x: 0, y: 0, width: 16, height: 16 }
 const f = delta => {
-	d.clear()
-	d.flip(false,false)
-	d.palette(0)
+	draw.clear()
+	draw.flip(false, false)
+	draw.palette(0)
 	let foo = { offsetX: 0, offsetY: 0, width: 8, height: 8 }
-	d.sprite(foo)
+	draw.sprite(foo)
 	for (let x = 0; x < 10; x++) {
-		d.position(8 * x, 0)
-		d.draw()
+		draw.position(8 * x, 0)
+		draw.draw()
 	}
 	for (let x = 0; x < 10; x++) {
-		d.position(8 * x, 8 * 10)
-		d.draw()
+		draw.position(8 * x, 8 * 10)
+		draw.draw()
 	}
 	for (let x = 0; x < 11; x++) {
-		d.position(8 * 10, 8 * x)
-		d.draw()
+		draw.position(8 * 10, 8 * x)
+		draw.draw()
 	}
 
-	d.sprite({ offsetX: 0, offsetY: 0, width: 16, height: 16 })
-	d.palette(1)
+	draw.sprite({ offsetX: 0, offsetY: 0, width: 16, height: 16 })
+	draw.palette(1)
 	const box1 = { x: 100 + (Math.sin(a) * 10), y: 100 + (Math.cos(a) * 10), width: 16, height: 16 }
 
-	d.position(box1.x, box1.y)
-	d.draw()
-	if (d.isInput()) {
-		let p = d.getInput()
+	draw.position(box1.x, box1.y)
+	draw.draw()
+	if (input.is()) {
+		let p = input.get()
 		console.log(p[0])
 		box2.x = p[0].x
 		box2.y = p[0].y
 	}
-	d.position(box2.x, box2.y)
-	if (d.boxCollision(box1, box2)) {
-		d.palette(0)
-		d.flip(true,true)
+	draw.position(box2.x, box2.y)
+	if (collision.boxToBox(box1, box2)) {
+		draw.palette(0)
+		draw.flip(true, true)
 	}
-	d.draw()
+	draw.draw()
 	a += 1 * delta
-
 }
 
 document.addEventListener('keypress', (e) => {
 	if (e.key == 'f')
-		d.toggleFullScreen()
+		draw.toggleFullScreen()
 })
-d.loop(f)
+draw.loop(f)
