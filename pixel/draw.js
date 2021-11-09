@@ -1,9 +1,5 @@
 import { verTex, fragTex } from './shaders.js'
 
-let canvas = null
-let renderWidth = null
-let renderHight = null
-
 let gl = null
 let textures = {
 	atlas: null,
@@ -93,9 +89,7 @@ function init() {
 }
 
 function set(canvasId, width, height) {
-	canvas = document.getElementById(canvasId)
-	renderWidth = width
-	renderHight = height
+	let canvas = document.getElementById(canvasId)
 	gl = canvas.getContext('webgl2')
 	init()
 	gl.uniform2f(shaders.resolution, width, height)
