@@ -19,6 +19,4 @@ export const draw: {
   }): void
   clear(): void
   draw(): void
-  loop(gameloop: (delta: Number) => void): void
-  toggleFullScreen(): void
 }

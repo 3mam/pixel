@@ -139,25 +139,6 @@ function clear() {
 	gl.clearColor(1.0, 0.5, 0.5, 1.0)
 }
 
-function loop(gameloop) {
-	let last = 0
-	const l = timestamp => {
-		const delta = Math.min(1, (timestamp - last) / 1000)
-		last = timestamp
-		gameloop(delta)
-		window.requestAnimationFrame(l)
-	}
-	l(0)
-}
-
-function toggleFullScreen() {
-	if (!document.fullscreenElement)
-		document.documentElement.requestFullscreen()
-	else if (document.exitFullscreen)
-		document.exitFullscreen()
-	screen.orientation.lock('portrait')
-}
-
 export const draw = {
 	init: set,
 	flip: flip,
@@ -169,6 +150,4 @@ export const draw = {
 	uploadSprite: uploadSprite,
 	clear: clear,
 	draw: () => gl.drawArrays(gl.TRIANGLES, 0, 6),
-	loop: loop,
-	toggleFullScreen: toggleFullScreen,
 }

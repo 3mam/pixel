@@ -1,7 +1,4 @@
-import { init } from './pixel/init.js'
-import { draw } from './pixel/draw.js'
-import { input } from './pixel/input.js'
-import { collision } from './pixel/collision.js'
+import { init, draw, input, collision, tool} from './pixel.js'
 
 const sp = [
 	3, 0, 3, 0, 3, 0, 1, 1, //8
@@ -110,6 +107,6 @@ const f = delta => {
 
 document.addEventListener('keypress', (e) => {
 	if (e.key == 'f')
-		draw.toggleFullScreen()
+		tool.toggleFullScreen()
 })
-draw.loop(f)
+tool.loop(f)
