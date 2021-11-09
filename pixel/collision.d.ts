@@ -1,6 +1,6 @@
 export const collision: {
   boxToBox(
-    box0: { x: Number, y: Number, width: Number, height: Number },
-    box1: { x: Number, y: Number, width: Number, height: Number }
-  ): Boolean
+    box0: { x: number, y: number, width: number, height: number },
+    box1: { x: number, y: number, width: number, height: number }
+  ): boolean
 }

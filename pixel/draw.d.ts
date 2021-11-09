@@ -1,21 +1,21 @@
 export const draw: {
-  init(canvasId: String, width: Number, height: Number): void
-  flip(flipX: Boolean, flipY: Boolean): void
-  position(x: Number, y: Number): void
+  init(canvasId: string, width: number, height: number): void
+  flip(flipX: boolean, flipY: boolean): void
+  position(x: number, y: number): void
   sprite(offsetRect: {
-    offsetX: Number
-    offsetY: Number
-    width: Number
-    height: Number
+    offsetX: number
+    offsetY: number
+    width: number
+    height: number
   }): void
-  camera(x: Number, y: Number): void
-  uploadPalette(data: Number[], palette: Number): void
-  palette(number: Number): void
-  uploadSprite(data: Number[], offsetRect: {
-    offsetX: Number
-    offsetY: Number
-    width: Number
-    height: Number
+  camera(x: number, y: number): void
+  uploadPalette(data: number[], palette: number): void
+  palette(number: number): void
+  uploadSprite(data: number[], offsetRect: {
+    offsetX: number
+    offsetY: number
+    width: number
+    height: number
   }): void
   clear(): void
   draw(): void

@@ -1,4 +1,4 @@
 export const tool: {
-  loop(gameloop: (delta: Number) => void): void
+  loop(gameloop: (delta: number) => void): void
   toggleFullScreen(): void
 }

@@ -1,11 +1,11 @@
 export const input: {
-  init(canvasId: String, width: Number, height: Number): void
-  is(): Boolean
+  init(canvasId: string, width: number, height: number): void
+  is(): boolean
   get(): [{
-    type: String,
-    timeStamp: Number,
-    identifier: Number,
-    x: Number,
-    y: Number,
+    type: string,
+    timeStamp: number,
+    identifier: number,
+    x: number,
+    y: number,
   }]
 }
