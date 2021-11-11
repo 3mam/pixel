@@ -15,6 +15,7 @@ let shaders = {
 	camera: null,
 	switchPalette: null,
 	flip: null,
+	index: null,
 }
 
 function shader(str, typ) {
@@ -39,22 +40,24 @@ function createShader(ver, frag) {
 	return id
 }
 
-function init() {
+function init(width, height) {
 	const program = createShader(verTex, fragTex)
 	gl.useProgram(program)
-	const sVertexPosition = gl.getAttribLocation(program, "vertex_position")
-	shaders.atlas = gl.getUniformLocation(program, "atlas")
-	shaders.palette = gl.getUniformLocation(program, "palette")
-	shaders.resolution = gl.getUniformLocation(program, "resolution")
-	shaders.sprite = gl.getUniformLocation(program, "sprite")
-	shaders.position = gl.getUniformLocation(program, "position")
-	shaders.camera = gl.getUniformLocation(program, "camera")
-	shaders.switchPalette = gl.getUniformLocation(program, "switch_palette")
-	shaders.flip = gl.getUniformLocation(program, "flip")
+	const sVertexPosition = gl.getAttribLocation(program, 'vertex_position')
+	shaders.atlas = gl.getUniformLocation(program, 'atlas')
+	shaders.palette = gl.getUniformLocation(program, 'palette')
+	shaders.resolution = gl.getUniformLocation(program, 'resolution')
+	shaders.sprite = gl.getUniformLocation(program, 'sprite')
+	shaders.position = gl.getUniformLocation(program, 'position')
+	shaders.camera = gl.getUniformLocation(program, 'camera')
+	shaders.switchPalette = gl.getUniformLocation(program, 'switch_palette')
+	shaders.flip = gl.getUniformLocation(program, 'flip')
+	shaders.index = gl.getUniformLocation(program, 'index')
 
 	gl.uniform1i(shaders.atlas, 0)
 	gl.uniform1i(shaders.palette, 1)
 	gl.uniform2f(shaders.flip, 1, 1)
+	gl.uniform1f(shaders.index, 0)
 
 	const buffer = gl.createBuffer()
 	gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
@@ -86,12 +89,15 @@ function init() {
 
 	gl.enable(gl.BLEND)
 	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+	gl.enable(gl.DEPTH_TEST)
+	//gl.depthMask(gl.FALSE)  
+	//gl.depthFunc(gl.ALWAYS)
 }
 
 function set(canvasId, width, height) {
 	let canvas = document.getElementById(canvasId)
 	gl = canvas.getContext('webgl2')
-	init()
+	init(width, height)
 	gl.uniform2f(shaders.resolution, width, height)
 }
 
@@ -124,8 +130,8 @@ function uploadPalette(data, palette) {
 	gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, palette, 32, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(data))
 }
 
-function palette(number = 0) {
-	gl.uniform1i(shaders.switchPalette, number)
+function palette(val = 0) {
+	gl.uniform1i(shaders.switchPalette, val)
 }
 
 function uploadSprite(data, { offsetX, offsetY, width, height }) {
@@ -135,8 +141,18 @@ function uploadSprite(data, { offsetX, offsetY, width, height }) {
 }
 
 function clear() {
-	gl.clear(gl.COLOR_BUFFER_BIT)
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	gl.clearColor(1.0, 0.5, 0.5, 1.0)
+	flip(false, false)
+}
+
+function show() {
+	gl.drawArrays(gl.TRIANGLES, 0, 6)
+	gl.uniform1f(shaders.index, 0)
+}
+
+function index(val = 0) {
+	gl.uniform1f(shaders.index, val/100)
 }
 
 export const draw = {
@@ -149,5 +165,6 @@ export const draw = {
 	palette: palette,
 	uploadSprite: uploadSprite,
 	clear: clear,
-	draw: () => gl.drawArrays(gl.TRIANGLES, 0, 6),
+	draw: show,
+	index: index,
 }

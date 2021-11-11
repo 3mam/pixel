@@ -4,6 +4,7 @@ uniform vec4 sprite;
 uniform vec2 position;
 uniform vec2 camera;
 uniform vec2 flip;
+uniform float index;
 in vec2 vertex_position;
 out vec2 uv;
 
@@ -30,7 +31,7 @@ void main() {
 	vec2 cord = ( ( position / resolution ) * 2.0 - 1.0 );
 	vec2 a = (flip_position  / ( resolution / 2.0 ) + cord);
 	vec2 cam = ( camera / resolution ) * 2.0;
-	gl_Position = vec4((a + cam)*vec2(1,-1), 0, 1);
+	gl_Position = vec4((a + cam), index, 1)*vec4(1,-1,-1,1);
 }
 `
 
@@ -45,7 +46,7 @@ out vec4 outColor;
 
 void main() {
 	int color = int(texelFetch(atlas, ivec2(uv),0).a*255.0);
-	for (int i = 0; i<32; i+=1) {		
+	for (int i = 0; i<32; i+=1) {
 		if (color == i) {
 			outColor = texelFetch(palette, ivec2(i,switch_palette),0);
 			break;
