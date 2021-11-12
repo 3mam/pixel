@@ -143,12 +143,12 @@ function uploadSprite(data, { offsetX, offsetY, width, height }) {
 function clear() {
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 	gl.clearColor(1.0, 0.5, 0.5, 1.0)
-	flip(false, false)
 }
 
 function show() {
 	gl.drawArrays(gl.TRIANGLES, 0, 6)
 	gl.uniform1f(shaders.index, 0)
+	flip(false, false)
 }
 
 function index(val = 0) {
