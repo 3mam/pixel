@@ -54,11 +54,11 @@ palette2[14] = 255
 palette2[15] = 255
 
 init('canvas', 180, 320)
-let squer = color=>new Uint8Array(8*8).fill(color)
-draw.uploadSprite(squer(1), { offsetX: 0, offsetY: 0, width: 8, height: 8 })
-draw.uploadSprite(squer(2), { offsetX: 8, offsetY: 0, width: 8, height: 8 })
-draw.uploadSprite(squer(3), { offsetX: 0, offsetY: 8, width: 8, height: 8 })
-draw.uploadSprite(squer(1), { offsetX: 8, offsetY: 8, width: 8, height: 8 })
+let squer = color=>new Array(8*8).fill(color)
+draw.uploadSprite({pixels: squer(1), offsetX: 0, offsetY: 0, width: 8, height: 8 })
+draw.uploadSprite({pixels: squer(2),  offsetX: 8, offsetY: 0, width: 8, height: 8 })
+draw.uploadSprite({pixels: squer(3),  offsetX: 0, offsetY: 8, width: 8, height: 8 })
+draw.uploadSprite({pixels: squer(1),  offsetX: 8, offsetY: 8, width: 8, height: 8 })
 draw.uploadPalette(palette, 0)
 draw.uploadPalette(palette2, 1)
 //320, 180

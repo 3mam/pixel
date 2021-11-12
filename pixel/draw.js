@@ -134,10 +134,10 @@ function palette(val = 0) {
 	gl.uniform1i(shaders.switchPalette, val)
 }
 
-function uploadSprite(data, { offsetX, offsetY, width, height }) {
+function uploadSprite({pixels, offsetX, offsetY, width, height }) {
 	gl.activeTexture(gl.TEXTURE0)
 	gl.bindTexture(gl.TEXTURE_2D, textures.atlas)
-	gl.texSubImage2D(gl.TEXTURE_2D, 0, offsetX, offsetY, width, height, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array(data))
+	gl.texSubImage2D(gl.TEXTURE_2D, 0, offsetX, offsetY, width, height, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array(pixels))
 }
 
 function clear() {
