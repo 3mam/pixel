@@ -148,7 +148,8 @@ function clear() {
 function show() {
 	gl.drawArrays(gl.TRIANGLES, 0, 6)
 	gl.uniform1f(shaders.index, 0)
-	flip(false, false)
+	flip()
+	palette()
 }
 
 function index(val = 0) {

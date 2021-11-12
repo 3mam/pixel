@@ -1,4 +1,5 @@
 import { init, draw, input, collision, tool } from './pixel.js'
+import {palette1, data} from './data.js'
 
 const sp = [
 	3, 0, 3, 0, 3, 0, 1, 1, //8
@@ -55,12 +56,12 @@ palette2[15] = 255
 
 init('canvas', 180, 320)
 let squer = color=>new Array(8*8).fill(color)
-draw.uploadSprite({pixels: squer(1), offsetX: 0, offsetY: 0, width: 8, height: 8 })
-draw.uploadSprite({pixels: squer(2),  offsetX: 8, offsetY: 0, width: 8, height: 8 })
-draw.uploadSprite({pixels: squer(3),  offsetX: 0, offsetY: 8, width: 8, height: 8 })
-draw.uploadSprite({pixels: squer(1),  offsetX: 8, offsetY: 8, width: 8, height: 8 })
-draw.uploadPalette(palette, 0)
-draw.uploadPalette(palette2, 1)
+draw.uploadSprite(data)
+//draw.uploadSprite({pixels: squer(2),  offsetX: 8, offsetY: 0, width: 8, height: 8 })
+//draw.uploadSprite({pixels: squer(3),  offsetX: 0, offsetY: 8, width: 8, height: 8 })
+//draw.uploadSprite({pixels: squer(1),  offsetX: 8, offsetY: 8, width: 8, height: 8 })
+draw.uploadPalette(palette1, 0)
+//draw.uploadPalette(palette2, 1)
 //320, 180
 
 let a = 0
@@ -68,6 +69,12 @@ let b = 100
 const box2 = { x: 0, y: 0, width: 16, height: 16 }
 const f = delta => {
 	draw.clear()
+
+	draw.palette(0)
+	draw.sprite({offsetX:0, offsetY:0, width:144, height:144})
+	draw.position(0,0)
+	draw.draw()
+
 	const box1 = { x: 100 + (Math.sin(a) * 10), y: 100 + (Math.cos(a) * 10), width: 16, height: 16 }
 
 	draw.sprite({ offsetX: 0, offsetY: 0, width: 16, height: 16 })
