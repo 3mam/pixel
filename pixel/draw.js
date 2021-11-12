@@ -150,6 +150,7 @@ function show() {
 	gl.uniform1f(shaders.index, 0)
 	flip()
 	palette()
+	index()
 }
 
 function index(val = 0) {
