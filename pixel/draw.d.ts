@@ -10,7 +10,7 @@ export const draw: {
   }): void
   camera(x: number, y: number): void
   uploadPalette(data: number[], palette: number): void
-  palette(number: number): void
+  palette(val: number): void
   uploadSprite(data: number[], offsetRect: {
     offsetX: number
     offsetY: number
@@ -19,4 +19,5 @@ export const draw: {
   }): void
   clear(): void
   draw(): void
+  index(val: number): void
 }
