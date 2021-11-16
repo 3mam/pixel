@@ -90,7 +90,7 @@ function init(width, height) {
 	gl.enable(gl.BLEND)
 	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
 	gl.enable(gl.DEPTH_TEST)
-	//gl.depthMask(gl.FALSE)  
+	gl.depthMask(gl.FALSE)  
 	//gl.depthFunc(gl.ALWAYS)
 }
 
@@ -142,7 +142,7 @@ function uploadSprite({pixels, offsetX, offsetY, width, height }) {
 
 function clear() {
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-	gl.clearColor(1.0, 0.5, 0.5, 1.0)
+	gl.clearColor(1.0, 0.5, 0.5, 0.0)
 }
 
 function show() {
