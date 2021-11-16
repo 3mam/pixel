@@ -1,4 +1,6 @@
+interface gameObject {}
+
 export const tool: {
-  loop(gameloop: (delta: number) => void): void
+  loop(gameFnLoop: (delta: number, gameObject: gameObject) => gameObject): void
   toggleFullScreen(): void
 }
