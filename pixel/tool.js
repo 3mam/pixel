@@ -1,13 +1,13 @@
 function loop(gameFnLoop) {
 	let last = 0
-	let gameObject = {}
-	const l = timestamp => {
+	let gameObject
+	const insideLoop = timestamp => {
 		const delta = Math.min(1, (timestamp - last) / 1000)
 		last = timestamp
 		gameObject = gameFnLoop(delta, gameObject)
-		window.requestAnimationFrame(l)
+		window.requestAnimationFrame(insideLoop)
 	}
-	l(0)
+	insideLoop(0)
 }
 
 function toggleFullScreen() {
