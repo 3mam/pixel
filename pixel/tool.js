@@ -4,7 +4,7 @@ function loop(gameFnLoop) {
 	const insideLoop = timestamp => {
 		const delta = Math.min(1, (timestamp - last) / 1000)
 		last = timestamp
-		gameObject = gameFnLoop(delta, gameObject)
+		gameObject = {...gameFnLoop(gameObject), delta}
 		window.requestAnimationFrame(insideLoop)
 	}
 	insideLoop(0)
